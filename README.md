@@ -1,4 +1,4 @@
 AnimatedProgressBar
 ===================
 
-A ProgressBar that animates instead of jumps
+A ProgressBar that animates smoothly
