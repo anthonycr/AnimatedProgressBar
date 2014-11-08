@@ -35,7 +35,7 @@ progressNum = progressBar.getProgres();
 
 **setProgress(int number):** a number between 0 and 100 that sets the progress of the view. If you set it out of these bounds, the view will set it to the closest bound, i.e. setting progress to 150 will correct it to 100.
 
-**getProgres():** returns an integer of the view's progress between 0 and 100.
+**getProgress():** returns an integer of the view's progress between 0 and 100.
 
 ####Setting it up
 
