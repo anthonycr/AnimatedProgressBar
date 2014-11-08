@@ -157,7 +157,7 @@ public class AnimatedProgressBar extends LinearLayout {
                     mProgressView.requestLayout();
                 }
                 if ((1.0f - interpolatedTime) < 0.0005) {
-                    if (mProgress >= 80) {
+                    if (mProgress >= 100) {
                         fadeOut();
                     }
                 }
