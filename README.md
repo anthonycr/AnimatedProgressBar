@@ -19,7 +19,7 @@ xmlns:custom="http://schemas.android.com/apk/res-auto"
         custom:progressColor="#2196f3" />
 ````
 
-**backgroundColor:** set the background color of the AnimatedProgressBar use #00000000 to make it invisible.
+**backgroundColor:** set the background color of the AnimatedProgressBar, use #00000000 to make it invisible.
 
 **progressColor:** set the progress color of the AnimatedProgressBar.
 
