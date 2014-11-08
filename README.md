@@ -44,3 +44,21 @@ progressNum = progressBar.getProgres();
 * Add the **attrs.xml** to your /res/values folder, or add its contents to your current attrs.xml file
 * Add the **animated_progress_bar.xml** file to your /res/layout folder
 * Use the library as is shown above in the XML Usage and Java Usage sections
+
+####License
+
+````
+Copyright 2014 Anthony Restaino
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+   ````
