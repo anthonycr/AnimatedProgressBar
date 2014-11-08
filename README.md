@@ -6,6 +6,8 @@ A ProgressBar that animates smoothly
 
 #Usage
 
+####[Download Sample App](https://github.com/anthonycr/AnimatedProgressBar/releases/download/1.0.0/release.apk)
+
 ####XML Usage
 ````
 xmlns:custom="http://schemas.android.com/apk/res-auto"
