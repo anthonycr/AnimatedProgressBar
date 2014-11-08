@@ -9,7 +9,7 @@ A ProgressBar that animates smoothly
 ####[Download Sample App](https://github.com/anthonycr/AnimatedProgressBar/releases/download/1.0.0/release.apk)
 
 ####XML Usage
-````
+```XML
 xmlns:custom="http://schemas.android.com/apk/res-auto"
 
 <anthonycr.animatedprogressbar.AnimatedProgressBar
@@ -19,7 +19,7 @@ xmlns:custom="http://schemas.android.com/apk/res-auto"
         custom:backgroundColor="#424242"
         custom:bidirectionalAnimate="true"
         custom:progressColor="#2196f3" />
-````
+```
 
 **backgroundColor:** set the background color of the AnimatedProgressBar, use #00000000 to make it invisible.
 
@@ -28,12 +28,12 @@ xmlns:custom="http://schemas.android.com/apk/res-auto"
 **bidirectionalAnimate:** set to true to have it animate up and down, set it to false to only have it animate up.
 
 ####Java Usage
-````
+```Java
 int progressNum = 50;
 progressBar = (AnimatedProgressBar) findViewById(R.id.progress_view);
 progressBar.setProgress(50);
 progressNum = progressBar.getProgres();
-````
+```
 
 **void setProgress(int number):** a number between 0 and 100 that sets the progress of the view. If you set it out of these bounds, the view will set it to the closest bound, i.e. setting progress to 150 will correct it to 100.
 
@@ -49,7 +49,7 @@ progressNum = progressBar.getProgres();
 
 ####License
 
-````
+```
 Copyright 2014 Anthony Restaino
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -63,4 +63,4 @@ Copyright 2014 Anthony Restaino
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-   ````
+   ```
