@@ -32,7 +32,7 @@ xmlns:custom="http://schemas.android.com/apk/res-auto"
 int progressNum = 50;
 progressBar = (AnimatedProgressBar) findViewById(R.id.progress_view);
 progressBar.setProgress(50);
-progressNum = progressBar.getProgres();
+progressNum = progressBar.getProgress();
 ```
 
 **void setProgress(int number):** a number between 0 and 100 that sets the progress of the view. If you set it out of these bounds, the view will set it to the closest bound, i.e. setting progress to 150 will correct it to 100.
