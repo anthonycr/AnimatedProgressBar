@@ -3,6 +3,7 @@ package anthonycr.animatedprogressbar;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewTreeObserver;
@@ -12,7 +13,8 @@ import java.util.Random;
 
 public class MainActivity extends Activity {
 
-    AnimatedProgressBar mProgressBar;
+    private AnimatedProgressBar mProgressBar;
+    private static final String TAG = "ProgressBar Sample";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,15 +27,15 @@ public class MainActivity extends Activity {
             @Override
             public void onGlobalLayout() {
                 mProgressBar.setProgress(50);               // Initially set the progress halfway
-                int progress = mProgressBar.getProgress();
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     mProgressBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 } else {
+                    //noinspection deprecation
                     mProgressBar.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 }
+                Log.i(TAG, "Current Progress: " + mProgressBar.getProgress());
             }
         });
-
 
 
     }
@@ -54,7 +56,7 @@ public class MainActivity extends Activity {
         if (id == R.id.action_random) {
             Random m = new Random();
             mProgressBar.setProgress(m.nextInt(100));   // Set the progress of the AnimatedProgressBar
-                                                        // Here we use
+            // Here we use
             return true;
         }
 
