@@ -15,7 +15,7 @@
         android:id="@+id/progress_view"
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        custom:backgroundColor="@color/color_progress_background"
+        android:background="@color/color_progress_background"
         custom:bidirectionalAnimate="true"
         custom:progressColor="@color/colorAccent"/>
 </RelativeLayout>

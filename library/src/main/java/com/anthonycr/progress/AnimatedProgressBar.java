@@ -63,20 +63,15 @@ public class AnimatedProgressBar extends View {
     private void init(final Context context, AttributeSet attrs) {
         setLayerType(LAYER_TYPE_HARDWARE, null);
         TypedArray array = context.getTheme().obtainStyledAttributes(attrs, R.styleable.AnimatedProgressBar, 0, 0);
-        int backgroundColor;
         try {
             // Retrieve the style of the progress bar that the user hopefully set
-            int DEFAULT_BACKGROUND_COLOR = Color.TRANSPARENT;
             int DEFAULT_PROGRESS_COLOR = Color.RED;
 
-            backgroundColor = array.getColor(R.styleable.AnimatedProgressBar_backgroundColor, DEFAULT_BACKGROUND_COLOR);
             mProgressColor = array.getColor(R.styleable.AnimatedProgressBar_progressColor, DEFAULT_PROGRESS_COLOR);
             mBidirectionalAnimate = array.getBoolean(R.styleable.AnimatedProgressBar_bidirectionalAnimate, false);
         } finally {
             array.recycle();
         }
-
-        setBackgroundColor(backgroundColor);           // set the background color for this view
     }
 
     /**
