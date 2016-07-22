@@ -27,12 +27,11 @@ A ProgressBar that animates smoothly
         android:id="@+id/progress_view"
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        custom:backgroundColor="#424242"
+        android:background="#424242"
         custom:bidirectionalAnimate="true"
         custom:progressColor="#2196f3" />
 ```
 
-- `backgroundColor`: set the background color of the AnimatedProgressBar, use #00000000 to make it invisible.
 - `progressColor`: set the progress color of the AnimatedProgressBar.
 - `bidirectionalAnimate`: set to true to have it animate up and down, set it to false to only have it animate up.
 
