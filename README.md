@@ -4,15 +4,22 @@ A ProgressBar that animates smoothly
 
 ![](animation.gif)
 
+####[Download Sample App](https://github.com/anthonycr/AnimatedProgressBar/releases/download/1.0.0/release.apk)
+
 #Usage
 
-####[Download Sample App](https://github.com/anthonycr/AnimatedProgressBar/releases/download/1.0.0/release.apk)
+* run `git submodule add <git@github.com:anthonycr/AnimatedProgressBar.git> /yourProject/subFolder`
+* include the library in your `settings.gradle` file
+    - `include ':animated-progress-bar'
+    - 'project(':animated-progress-bar').projectDir = new File(rootProject.projectDir, '/yourProject/subFolder')`
+* compile the project: `compile project(':animated-progress-bar')`
+
+# API
 
 ####XML Usage
 ```XML
-xmlns:custom="http://schemas.android.com/apk/res-auto"
-
-<anthonycr.animatedprogressbar.AnimatedProgressBar
+<com.anthonycr.progress.AnimatedProgressBar
+        xmlns:custom="http://schemas.android.com/apk/res-auto"
         android:id="@+id/progress_view"
         android:layout_width="match_parent"
         android:layout_height="5dp"
@@ -21,11 +28,9 @@ xmlns:custom="http://schemas.android.com/apk/res-auto"
         custom:progressColor="#2196f3" />
 ```
 
-**backgroundColor:** set the background color of the AnimatedProgressBar, use #00000000 to make it invisible.
-
-**progressColor:** set the progress color of the AnimatedProgressBar.
-
-**bidirectionalAnimate:** set to true to have it animate up and down, set it to false to only have it animate up.
+- `backgroundColor`: set the background color of the AnimatedProgressBar, use #00000000 to make it invisible.
+- `progressColor`: set the progress color of the AnimatedProgressBar.
+- `bidirectionalAnimate`: set to true to have it animate up and down, set it to false to only have it animate up.
 
 ####Java Usage
 ```Java
@@ -35,19 +40,10 @@ progressBar.setProgress(50);
 progressNum = progressBar.getProgress();
 ```
 
-**void setProgress(int number):** a number between 0 and 100 that sets the progress of the view. If you set it out of these bounds, the view will set it to the closest bound, i.e. setting progress to 150 will correct it to 100.
+- `void setProgress(int number)`: a number between 0 and 100 that sets the progress of the view. If you set it out of these bounds, the view will set it to the closest bound, i.e. setting progress to 150 will correct it to 100.
+- `int getProgress()`: returns an integer of the view's progress between 0 and 100.
 
-**int getProgress():** returns an integer of the view's progress between 0 and 100.
-
-####Setting it up
-
-* Download the files in the library folder
-* Add the **AnimatedProgressBar.java** file to your java folder
-* Add the **attrs.xml** to your /res/values folder, or add its contents to your current attrs.xml file
-* Add the **animated_progress_bar.xml** file to your /res/layout folder
-* Use the library as is shown above in the XML Usage and Java Usage sections
-
-####License
+#License
 
 ```
 Copyright 2014 Anthony Restaino
