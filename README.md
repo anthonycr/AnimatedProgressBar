@@ -12,7 +12,7 @@ A ProgressBar that animates smoothly
 * run `git submodule add <git@github.com:anthonycr/AnimatedProgressBar.git> /yourProject/subFolder`
 * include the library in your `settings.gradle` file
     - `include ':animated-progress-bar'`
-    - `'project(':animated-progress-bar').projectDir = new File(rootProject.projectDir, '/yourProject/subFolder')``
+    - `project(':animated-progress-bar').projectDir = new File(rootProject.projectDir, '/yourProject/subFolder')`
 * compile the project: `compile project(':animated-progress-bar')`
 
 ####Other
