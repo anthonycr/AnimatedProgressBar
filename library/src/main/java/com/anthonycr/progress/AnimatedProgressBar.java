@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
@@ -39,7 +40,7 @@ public class AnimatedProgressBar extends View {
     private int mProgressColor;
 
     private final Interpolator mAlphaInterpolator = new LinearInterpolator();
-    private final Interpolator mProgressInterpolator = new DecelerateInterpolator();
+    private final Interpolator mProgressInterpolator = new AccelerateDecelerateInterpolator();
 
     private static final long PROGRESS_DURATION = 500;
     private static final long ALPHA_DURATION = 200;
@@ -61,7 +62,6 @@ public class AnimatedProgressBar extends View {
      * @param attrs   is the attribute set passed by the constructor
      */
     private void init(final Context context, AttributeSet attrs) {
-        setLayerType(LAYER_TYPE_HARDWARE, null);
         TypedArray array = context.getTheme().obtainStyledAttributes(attrs, R.styleable.AnimatedProgressBar, 0, 0);
         try {
             // Retrieve the style of the progress bar that the user hopefully set
