@@ -25,12 +25,14 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.Transformation;
+
+import java.util.ArrayDeque;
+import java.util.Queue;
 
 public class AnimatedProgressBar extends View {
 
@@ -40,7 +42,9 @@ public class AnimatedProgressBar extends View {
     private int mProgressColor;
 
     private final Interpolator mAlphaInterpolator = new LinearInterpolator();
-    private final Interpolator mProgressInterpolator = new AccelerateDecelerateInterpolator();
+    private final Interpolator mProgressInterpolator = new BezierEaseInterpolator();
+
+    private final Queue<Animation> mAnimationQueue = new ArrayDeque<>();
 
     private static final long PROGRESS_DURATION = 500;
     private static final long ALPHA_DURATION = 200;
@@ -134,7 +138,7 @@ public class AnimatedProgressBar extends View {
         final int deltaWidth = (mWidth * mProgress / 100) - mDrawWidth;     // calculate amount the width has to change
 
         if (deltaWidth != 0) {
-            animateView(mDrawWidth, mWidth, deltaWidth);    // animate the width change
+            animateView(mDrawWidth, deltaWidth, mWidth);    // animate the width change
         }
     }
 
@@ -142,35 +146,20 @@ public class AnimatedProgressBar extends View {
      * private method used to create and run the animation used to change the progress
      *
      * @param initialWidth is the width at which the progress starts at
-     * @param maxWidth     is the maximum width (total width of the view)
      * @param deltaWidth   is the amount by which the width of the progress view will change
+     * @param maxWidth     is the maximum width (total width of the view)
      */
-    private void animateView(final int initialWidth, final int maxWidth, final int deltaWidth) {
-        Animation fill = new Animation() {
-
-            @Override
-            protected void applyTransformation(float interpolatedTime, Transformation t) {
-                int width = initialWidth + (int) (deltaWidth * interpolatedTime);
-                if (width <= maxWidth) {
-                    mDrawWidth = width;
-                    invalidate();
-                }
-                if ((1.0f - interpolatedTime) < 0.0005) {
-                    if (mProgress >= 100) {
-                        fadeOut();
-                    }
-                }
-            }
-
-            @Override
-            public boolean willChangeBounds() {
-                return false;
-            }
-        };
+    private void animateView(final int initialWidth, final int deltaWidth, final int maxWidth) {
+        Animation fill = new ProgressAnimation(initialWidth, deltaWidth, maxWidth);
 
         fill.setDuration(PROGRESS_DURATION);
         fill.setInterpolator(mProgressInterpolator);
-        startAnimation(fill);
+
+        if (!mAnimationQueue.isEmpty()) {
+            mAnimationQueue.add(fill);
+        } else {
+            startAnimation(fill);
+        }
     }
 
     /**
@@ -209,6 +198,46 @@ public class AnimatedProgressBar extends View {
         bundle.putParcelable("instanceState", super.onSaveInstanceState());
         bundle.putInt("progressState", mProgress);
         return bundle;
+    }
+
+    private class ProgressAnimation extends Animation {
+
+        private int mInitialWidth;
+        private int mDeltaWidth;
+        private int mMaxWidth;
+
+        ProgressAnimation(int initialWidth, int deltaWidth, int maxWidth) {
+            mInitialWidth = initialWidth;
+            mDeltaWidth = deltaWidth;
+            mMaxWidth = maxWidth;
+        }
+
+        @Override
+        protected void applyTransformation(float interpolatedTime, Transformation t) {
+            int width = mInitialWidth + (int) (mDeltaWidth * interpolatedTime);
+            if (width <= mMaxWidth) {
+                mDrawWidth = width;
+                invalidate();
+            }
+            if (Math.abs(1.0f - interpolatedTime) < 0.00001) {
+                if (mProgress >= 100) {
+                    fadeOut();
+                }
+                if (!mAnimationQueue.isEmpty()) {
+                    startAnimation(mAnimationQueue.poll());
+                }
+            }
+        }
+
+        @Override
+        public boolean willChangeBounds() {
+            return false;
+        }
+
+        @Override
+        public boolean willChangeTransformationMatrix() {
+            return false;
+        }
     }
 
 }
