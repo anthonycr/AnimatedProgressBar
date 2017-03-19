@@ -21,3 +21,16 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    minSdkVersion = 14
+    compileSdkVersion = 25
+    targetSdkVersion = compileSdkVersion
+    buildToolsVersion = '25.0.2'
+
+    versionCode = 1
+    versionName = '1.0'
+
+    PUBLISH_GROUP_ID = 'com.anthonycr.progress'
+    PUBLISH_ARTIFACT_ID = 'animated-progress'
+}
