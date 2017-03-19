@@ -19,4 +19,4 @@ install:
   - ./gradlew
 script:
   - ./gradlew :library:assembleDebug --stacktrace
-  - ./gradlew :sample:assembleDebug --stacktrace
+  - ./gradlew :app:assembleDebug --stacktrace
