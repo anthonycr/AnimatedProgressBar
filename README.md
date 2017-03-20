@@ -2,7 +2,11 @@ AnimatedProgressBar
 ===================
 A ProgressBar that animates smoothly
 
-[![Build Status](https://travis-ci.org/anthonycr/AnimatedProgressBar.svg?branch=master)](https://travis-ci.org/anthonycr/AnimatedProgressBar)
+| Branch | Build Status |
+|--------|--------------|
+| master | [![Build Status](https://travis-ci.org/anthonycr/AnimatedProgressBar.svg?branch=master)](https://travis-ci.org/anthonycr/AnimatedProgressBar) |
+| dev    | [![Build Status](https://travis-ci.org/anthonycr/AnimatedProgressBar.svg?branch=dev)](https://travis-ci.org/anthonycr/AnimatedProgressBar) |
+
 
 ![](animation.gif)
 
