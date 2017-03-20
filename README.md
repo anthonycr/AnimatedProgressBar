@@ -2,22 +2,28 @@ AnimatedProgressBar
 ===================
 A ProgressBar that animates smoothly
 
-[![Build Status](https://travis-ci.org/anthonycr/AnimatedProgressBar.svg?branch=master)](https://travis-ci.org/anthonycr/AnimatedProgressBar)
+| Branch | Build Status |
+|--------|--------------|
+| master | [![Build Status](https://travis-ci.org/anthonycr/AnimatedProgressBar.svg?branch=master)](https://travis-ci.org/anthonycr/AnimatedProgressBar) |
+| dev    | [![Build Status](https://travis-ci.org/anthonycr/AnimatedProgressBar.svg?branch=dev)](https://travis-ci.org/anthonycr/AnimatedProgressBar) |
 
 ![](animation.gif)
 
-####[Download Sample App](https://github.com/anthonycr/AnimatedProgressBar/releases/download/1.0.0/release.apk)
+#### [Download Sample App](https://github.com/anthonycr/AnimatedProgressBar/releases/download/1.0.0/release.apk)
 
-#Usage
+# Usage
 
-####Gradle
+#### From jcenter
+* `compile 'com.anthonycr.progress:animated-progress:1.0'`
+
+#### From submodule
 * run `git submodule add git@github.com:anthonycr/AnimatedProgressBar.git /yourProject/subFolder`
 * include the library in your `settings.gradle` file
     - `include ':animated-progress-bar'`
     - `project(':animated-progress-bar').projectDir = new File(rootProject.projectDir, '/yourProject/subFolder')`
 * compile the project: `compile project(':animated-progress-bar')`
 
-####Other
+#### Other
 * Copy `AnimatedProgressBar.java` and the contents of `attrs.xml` into your project and you're all set.
 
 # API
