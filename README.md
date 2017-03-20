@@ -2,6 +2,8 @@ AnimatedProgressBar
 ===================
 A ProgressBar that animates smoothly
 
+[![Build Status](https://travis-ci.org/anthonycr/AnimatedProgressBar.svg?branch=master)](https://travis-ci.org/anthonycr/AnimatedProgressBar)
+
 ![](animation.gif)
 
 ####[Download Sample App](https://github.com/anthonycr/AnimatedProgressBar/releases/download/1.0.0/release.apk)
