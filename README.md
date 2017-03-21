@@ -28,7 +28,7 @@ A ProgressBar that animates smoothly
 
 # API
 
-####XML Usage
+#### XML Usage
 ```XML
 <com.anthonycr.progress.AnimatedProgressBar
         xmlns:custom="http://schemas.android.com/apk/res-auto"
@@ -43,7 +43,7 @@ A ProgressBar that animates smoothly
 - `progressColor`: set the progress color of the AnimatedProgressBar.
 - `bidirectionalAnimate`: set to true to have it animate up and down, set it to false to only have it animate up.
 
-####Java Usage
+#### Java Usage
 ```Java
 int progressNum = 50;
 progressBar = (AnimatedProgressBar) findViewById(R.id.progress_view);
@@ -54,7 +54,7 @@ progressNum = progressBar.getProgress();
 - `void setProgress(int number)`: a number between 0 and 100 that sets the progress of the view. If you set it out of these bounds, the view will set it to the closest bound, i.e. setting progress to 150 will correct it to 100.
 - `int getProgress()`: returns an integer of the view's progress between 0 and 100.
 
-#License
+# License
 
 ```
 Copyright 2014 Anthony Restaino
@@ -70,4 +70,4 @@ Copyright 2014 Anthony Restaino
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-   ```
+```
