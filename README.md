@@ -7,6 +7,10 @@ A ProgressBar that animates smoothly
 | master | [![Build Status](https://travis-ci.org/anthonycr/AnimatedProgressBar.svg?branch=master)](https://travis-ci.org/anthonycr/AnimatedProgressBar) |
 | dev    | [![Build Status](https://travis-ci.org/anthonycr/AnimatedProgressBar.svg?branch=dev)](https://travis-ci.org/anthonycr/AnimatedProgressBar) |
 
+| Latest Version |
+|----------------|
+| [![Download](https://api.bintray.com/packages/anthonycr/android/com.anthonycr.progress%3Aanimated-progress/images/download.svg)](https://bintray.com/anthonycr/android/com.anthonycr.progress%3Aanimated-progress/_latestVersion) |
+
 ![](animation.gif)
 
 #### [Download Sample App](https://github.com/anthonycr/AnimatedProgressBar/releases/download/1.0.0/release.apk)
