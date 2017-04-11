@@ -23,10 +23,11 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.ColorInt;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.Transformation;
@@ -34,20 +35,28 @@ import android.view.animation.Transformation;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
+@SuppressWarnings("unused")
 public class AnimatedProgressBar extends View {
 
+    // State variables
     private int mProgress = 0;
-    private boolean mBidirectionalAnimate = true;
     private int mDrawWidth = 0;
-    private int mProgressColor;
 
+    // Consumer variables
+    private int mProgressColor;
+    private boolean mBidirectionalAnimate = true;
+    private int mAnimationDuration;
+
+    // Animation interpolators
     private final Interpolator mAlphaInterpolator = new LinearInterpolator();
     private final Interpolator mProgressInterpolator = new BezierEaseInterpolator();
 
     private final Queue<Animation> mAnimationQueue = new ArrayDeque<>();
 
-    private static final long PROGRESS_DURATION = 500;
-    private static final long ALPHA_DURATION = 200;
+    private static final int PROGRESS_DURATION = 500;
+    private static final int ALPHA_DURATION = 200;
+
+    private static final int MAX_PROGRESS = 100;
 
     public AnimatedProgressBar(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -69,13 +78,48 @@ public class AnimatedProgressBar extends View {
         TypedArray array = context.getTheme().obtainStyledAttributes(attrs, R.styleable.AnimatedProgressBar, 0, 0);
         try {
             // Retrieve the style of the progress bar that the user hopefully set
-            int DEFAULT_PROGRESS_COLOR = Color.RED;
-
-            mProgressColor = array.getColor(R.styleable.AnimatedProgressBar_progressColor, DEFAULT_PROGRESS_COLOR);
+            mProgressColor = array.getColor(R.styleable.AnimatedProgressBar_progressColor, Color.RED);
             mBidirectionalAnimate = array.getBoolean(R.styleable.AnimatedProgressBar_bidirectionalAnimate, false);
+            mAnimationDuration = array.getInteger(R.styleable.AnimatedProgressBar_animationDuration, PROGRESS_DURATION);
         } finally {
             array.recycle();
         }
+    }
+
+    /**
+     * Sets the duration of the animation that
+     * runs on the progress bar.
+     *
+     * @param duration the duration of the animation,
+     *                 in milliseconds.
+     */
+    public void setDuration(int duration) {
+        mAnimationDuration = duration;
+    }
+
+    /**
+     * Sets whether or not the view should animate
+     * in both directions, or whether is should only
+     * animate up.
+     *
+     * @param bidirectionalAnimate true to animate in both
+     *                             directions, false to animate
+     *                             only up.
+     */
+    public void setBidirectionalAnimate(boolean bidirectionalAnimate) {
+        mBidirectionalAnimate = bidirectionalAnimate;
+    }
+
+    /**
+     * Sets the color that the progress bar will be.
+     * Calling this method will trigger a redraw.
+     *
+     * @param color the color that should be used to draw
+     *              the progress bar.
+     */
+    public void setProgressColor(@ColorInt int color) {
+        mProgressColor = color;
+        invalidate();
     }
 
     /**
@@ -98,6 +142,12 @@ public class AnimatedProgressBar extends View {
         canvas.drawRect(mRect, mPaint);
     }
 
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        invalidate();
+    }
+
     /**
      * sets the progress as an integer value between 0 and 100.
      * Values above or below that interval will be adjusted to their
@@ -107,38 +157,58 @@ public class AnimatedProgressBar extends View {
      * @param progress an integer between 0 and 100
      */
     public void setProgress(int progress) {
-
-        if (progress > 100) {       // progress cannot be greater than 100
-            progress = 100;
-        } else if (progress < 0) {  // progress cannot be less than 0
+        // Progress cannot be greater than 100
+        if (progress > MAX_PROGRESS) {
+            progress = MAX_PROGRESS;
+        } else if (progress < 0) {
+            // progress cannot be less than 0
             progress = 0;
+        }
+
+        int width = getMeasuredWidth();
+
+        // If the view is not laid out yet, then we can't
+        // render the progress, so we post a runnable to
+        // the view to set the progress, and return.
+        final int finalProgress = progress;
+        if (width == 0 && !ViewCompat.isLaidOut(this)) {
+            post(new Runnable() {
+                @Override
+                public void run() {
+                    setProgress(finalProgress);
+                }
+            });
+
+            return;
         }
 
         if (getAlpha() < 1.0f) {
             fadeIn();
         }
 
-        int mWidth = getMeasuredWidth();
         // Set the drawing bounds for the ProgressBar
         mRect.left = 0;
         mRect.top = 0;
         mRect.bottom = getBottom() - getTop();
-        if (progress < mProgress && !mBidirectionalAnimate) {   // if the we only animate the view in one direction
-            // then reset the view width if it is less than the
-            // previous progress
+        if (progress < mProgress && !mBidirectionalAnimate) {
+            // Reset the view width if it is less than the
+            // previous progress and we aren't using bidirectional animation.
             mDrawWidth = 0;
-        } else if (progress == mProgress) {     // we don't need to go any farther if the progress is unchanged
-            if (progress == 100) {
+        } else if (progress == mProgress) {
+            if (progress == MAX_PROGRESS) {
                 fadeOut();
             }
         }
 
-        mProgress = progress;       // save the progress
+        // Store the current progress
+        mProgress = progress;
 
-        final int deltaWidth = (mWidth * mProgress / 100) - mDrawWidth;     // calculate amount the width has to change
+        // Calculate the width delta
+        final int deltaWidth = (width * mProgress / MAX_PROGRESS) - mDrawWidth;
 
         if (deltaWidth != 0) {
-            animateView(mDrawWidth, deltaWidth, mWidth);    // animate the width change
+            // Animate the width change
+            animateView(mDrawWidth, deltaWidth, width);
         }
     }
 
@@ -152,7 +222,7 @@ public class AnimatedProgressBar extends View {
     private void animateView(final int initialWidth, final int deltaWidth, final int maxWidth) {
         Animation fill = new ProgressAnimation(initialWidth, deltaWidth, maxWidth);
 
-        fill.setDuration(PROGRESS_DURATION);
+        fill.setDuration(mAnimationDuration);
         fill.setInterpolator(mProgressInterpolator);
 
         if (!mAnimationQueue.isEmpty()) {
@@ -167,9 +237,9 @@ public class AnimatedProgressBar extends View {
      */
     private void fadeIn() {
         animate().alpha(1)
-            .setDuration(ALPHA_DURATION)
-            .setInterpolator(mAlphaInterpolator)
-            .start();
+                .setDuration(ALPHA_DURATION)
+                .setInterpolator(mAlphaInterpolator)
+                .start();
     }
 
     /**
@@ -177,9 +247,9 @@ public class AnimatedProgressBar extends View {
      */
     private void fadeOut() {
         animate().alpha(0)
-            .setDuration(ALPHA_DURATION)
-            .setInterpolator(mAlphaInterpolator)
-            .start();
+                .setDuration(ALPHA_DURATION)
+                .setInterpolator(mAlphaInterpolator)
+                .start();
     }
 
     @Override
@@ -220,7 +290,7 @@ public class AnimatedProgressBar extends View {
                 invalidate();
             }
             if (Math.abs(1.0f - interpolatedTime) < 0.00001) {
-                if (mProgress >= 100) {
+                if (mProgress >= MAX_PROGRESS) {
                     fadeOut();
                 }
                 if (!mAnimationQueue.isEmpty()) {

@@ -41,11 +41,13 @@ A ProgressBar that animates smoothly
         android:layout_height="5dp"
         android:background="#424242"
         custom:bidirectionalAnimate="true"
-        custom:progressColor="#2196f3" />
+        custom:progressColor="#2196f3"
+        custom:animationDuration="300" />
 ```
 
-- `progressColor`: set the progress color of the AnimatedProgressBar.
-- `bidirectionalAnimate`: set to true to have it animate up and down, set it to false to only have it animate up.
+- `progressColor`: Set the progress color of the AnimatedProgressBar. Default value is `#FF0000`.
+- `bidirectionalAnimate`: Set to true to have it animate up and down, set it to false to only have it animate up. Default is true.
+- `animationDuration`: Set to the duration in milliseconds that the progress animation sure take. Default value is 500ms.
 
 #### Java Usage
 ```Java

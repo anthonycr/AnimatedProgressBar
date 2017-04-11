@@ -1,13 +1,9 @@
 package com.anthonycr.sample;
 
-import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewTreeObserver;
 
 import com.anthonycr.progress.AnimatedProgressBar;
 
@@ -15,8 +11,6 @@ import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
-
-    private static final String TAG = MainActivity.class.getSimpleName();
 
     private AnimatedProgressBar mProgressBar;
 
@@ -26,23 +20,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().show();
         mProgressBar = (AnimatedProgressBar) findViewById(R.id.progress_view);
-
-        ViewTreeObserver observer = mProgressBar.getViewTreeObserver();
-        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                mProgressBar.setProgress(50);               // Initially set the progress halfway
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    mProgressBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                } else {
-                    //noinspection deprecation
-                    mProgressBar.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                }
-                Log.i(TAG, "Current Progress: " + mProgressBar.getProgress());
-            }
-        });
-
-
+        // Initialize the progress bar to 50/100
+        mProgressBar.setProgress(50);
     }
 
 
