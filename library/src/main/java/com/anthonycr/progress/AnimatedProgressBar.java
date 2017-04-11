@@ -24,6 +24,7 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.ColorInt;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Animation;
@@ -164,11 +165,27 @@ public class AnimatedProgressBar extends View {
             progress = 0;
         }
 
+        int width = getMeasuredWidth();
+
+        // If the view is not laid out yet, then we can't
+        // render the progress, so we post a runnable to
+        // the view to set the progress, and return.
+        final int finalProgress = progress;
+        if (width == 0 && !ViewCompat.isLaidOut(this)) {
+            post(new Runnable() {
+                @Override
+                public void run() {
+                    setProgress(finalProgress);
+                }
+            });
+
+            return;
+        }
+
         if (getAlpha() < 1.0f) {
             fadeIn();
         }
 
-        int mWidth = getMeasuredWidth();
         // Set the drawing bounds for the ProgressBar
         mRect.left = 0;
         mRect.top = 0;
@@ -187,11 +204,11 @@ public class AnimatedProgressBar extends View {
         mProgress = progress;
 
         // Calculate the width delta
-        final int deltaWidth = (mWidth * mProgress / MAX_PROGRESS) - mDrawWidth;
+        final int deltaWidth = (width * mProgress / MAX_PROGRESS) - mDrawWidth;
 
         if (deltaWidth != 0) {
             // Animate the width change
-            animateView(mDrawWidth, deltaWidth, mWidth);
+            animateView(mDrawWidth, deltaWidth, width);
         }
     }
 
