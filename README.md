@@ -11,9 +11,7 @@ A ProgressBar that animates smoothly
 |----------------|
 | [![Download](https://api.bintray.com/packages/anthonycr/android/com.anthonycr.progress%3Aanimated-progress/images/download.svg)](https://bintray.com/anthonycr/android/com.anthonycr.progress%3Aanimated-progress/_latestVersion) |
 
-![](animation.gif)
-
-#### [Download Sample App](https://github.com/anthonycr/AnimatedProgressBar/releases/download/1.0.0/release.apk)
+<img src="animation.gif" width="300">
 
 # Usage
 
